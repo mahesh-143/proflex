@@ -8,8 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-
-export const categoryFilters = ["Frontend", "Backend", "Full-Stack", "Mobile"]
+import { categoryFilters } from "@/constant"
 
 export default function Home() {
   return (
