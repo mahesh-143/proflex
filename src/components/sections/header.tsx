@@ -2,6 +2,7 @@ import { MainNav } from '@/components/main-nav'
 import { Search } from '@/components/search'
 import { UserNav } from '@/components/user-nav'
 import Logo from '@/components/logo'
+import { Button } from '../ui/button'
 
 const Header = () => {
   return (
@@ -12,7 +13,10 @@ const Header = () => {
             <MainNav className="mx-6" />
             <div className="ml-auto flex items-center space-x-4">
               <Search />
-              <UserNav />
+              <Button variant={"ghost"}>Login</Button>
+              <Button>Sign Up</Button>
+              <Button variant={'outline'}>Hire Developers</Button>
+              {/* <UserNav /> */}
             </div>
           </div>
         </div>

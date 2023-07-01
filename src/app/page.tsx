@@ -1,22 +1,53 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import Image from "next/image"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+
+export const categoryFilters = ["Frontend", "Backend", "Full-Stack", "Mobile"]
+
 export default function Home() {
   return (
-    <div className="mx-6 pt-6">
-      <Tabs defaultValue="overview" className="space-y-4 ">
+    <div className="mx-4 mt-8">
+      <Tabs defaultValue="all" className="space-y-8 grid place-items-center">
         <TabsList>
-          <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="analytics" disabled>
-            Analytics
-          </TabsTrigger>
-          <TabsTrigger value="reports" disabled>
-            Reports
-          </TabsTrigger>
-          <TabsTrigger value="notifications" disabled>
-            Notifications
-          </TabsTrigger>
+          <TabsTrigger value="all">All</TabsTrigger>
+          {categoryFilters.map((category) => {
+            return (
+              <TabsTrigger key={category} value={category}>
+                {category}
+              </TabsTrigger>
+            )
+          })}
         </TabsList>
-        <TabsContent value="overview" className="space-y-4">
-          <h1>Tab Content</h1>
+        <TabsContent value="all" className="space-y-8">
+          <div className="flex flex-wrap gap-4 justify-center mb-8">
+            <Card>
+              <CardHeader>
+                <CardTitle>Card Title</CardTitle>
+                <CardDescription>
+                  Lorem ipsum dolor sit amet . Officia nisi error maiores. fmsa
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Image
+                  src={"/demoimage.jpg"}
+                  alt="project thumbnail"
+                  width={300}
+                  height={200}
+                  className="w-full"
+                />
+              </CardContent>
+              <CardFooter>
+                <p>by author</p>
+              </CardFooter>
+            </Card>
+          </div>
         </TabsContent>
       </Tabs>
     </div>
