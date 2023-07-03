@@ -6,7 +6,7 @@ import CredentialsProvider from "next-auth/providers/credentials"
 import client from "@/app/libs/prismadb"
 import bcrypt from "bcrypt"
 
-const authOptions: NextAuthOptions = {
+export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(client),
   providers: [
     GoogleProvider({
@@ -22,7 +22,6 @@ const authOptions: NextAuthOptions = {
       credentials: {
         email: { label: "Email", type: "text" },
         password: { label: "Password", type: "password" },
-        username: { label: "Username", type: "text" },
       },
       async authorize(credentials) {
         // check to see if email and password is there
@@ -57,6 +56,11 @@ const authOptions: NextAuthOptions = {
       },
     }),
   ],
+  secret: process.env.SECRET,
+  session: {
+    strategy: "jwt",
+  },
+  debug: process.env.NODE_ENV === "development",
 }
 
 const handler = NextAuth(authOptions)
