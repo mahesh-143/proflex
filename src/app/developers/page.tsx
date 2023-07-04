@@ -15,6 +15,7 @@ async function developers() {
             return (
               <Link
                 href={`user/${user.id}`}
+                key={user.id}
                 className="flex items-center space-x-4 p-4 border border-slate-200 rounded-xl overflow-clip"
               >
                 <Avatar>
