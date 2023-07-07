@@ -1,4 +1,6 @@
+import { useSession } from "next-auth/react"
 import axiosClient from "./axiosClient"
+import prisma from "@/app/libs/prismadb"
 
 export async function createUser(data: {
   name: string
