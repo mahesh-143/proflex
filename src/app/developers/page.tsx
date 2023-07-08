@@ -24,7 +24,7 @@ async function developers() {
                   <p className="text-sm font-medium leading-none">
                     {user.name}
                   </p>
-                  <p className="text-sm text-muted-foreground">{user.email}</p>
+                  <p className="text-sm text-muted-foreground">{user.role} Developer</p>
                 </div>
               </Link>
             )
