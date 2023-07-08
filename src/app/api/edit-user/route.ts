@@ -6,10 +6,12 @@ import { NextRequest, NextResponse } from "next/server"
 export async function PUT(request: NextRequest) {
   const session = await getServerSession(authOptions)
   // Check if the user is authenticated
+  //@ts-ignore
   if (!session?.user?.id) {
   return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
   }
   const body = await request.json()
+  //@ts-ignore
   const id = await session?.user?.id
   try {
     // update the user in database
