@@ -10,6 +10,15 @@ import { useSession } from "next-auth/react"
 
 const Header = () => {
   const session = useSession()
+  const name: string = session.data?.user?.name || ""
+  const email: string = session.data?.user?.email || ""
+  const image: string = session.data?.user?.image || ""
+
+  const userProps = {
+    name,
+    email,
+    image,
+  }
   return (
     <div className="hidden flex-col md:flex">
       <div className="border-b">
@@ -25,7 +34,7 @@ const Header = () => {
                 <Button variant={"outline"}>Hire Developers</Button>
               </>
             ) : (
-              <>{<UserNav {...session.data.user} />}</>
+              <>{<UserNav {...userProps} />}</>
             )}
           </div>
         </div>

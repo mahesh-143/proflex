@@ -26,7 +26,7 @@ export default function RootLayout({
           <Toaster />
           </>
         </Provider>
-        <Footer />
+        {/* <Footer /> */}
         </body>
     </html>
   )

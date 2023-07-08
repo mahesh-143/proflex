@@ -53,7 +53,13 @@ export function CreateAccount() {
       toast({
         title: "Registration Successfull!!!",
       })
+      signIn("credentials",
+      {
+        "email": data.email,
+        "password": data.password,
+      })
       setIsLoading(false)
+
     } catch (err) {
       setIsError(true)
       setError(`${err}`)

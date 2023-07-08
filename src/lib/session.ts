@@ -6,7 +6,6 @@ import CredentialsProvider from "next-auth/providers/credentials"
 import client from "@/app/libs/prismadb"
 import bcrypt from "bcrypt"
 
-
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(client),
   providers: [
@@ -57,6 +56,15 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
+   callbacks: {
+    session: async ({ session, token }) => {
+      if (session?.user) {
+        //@ts-ignore
+        session.user.id = token.sub;
+      }
+      return session;
+    },
+  },
   secret: process.env.SECRET,
   session: {
     strategy: "jwt",

@@ -1,8 +1,6 @@
 import React from "react"
 import prisma from "../libs/prismadb"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
-import { ChevronDown, EyeIcon, LucideView, View, ViewIcon } from "lucide-react"
 import Link from "next/link"
 
 async function developers() {
