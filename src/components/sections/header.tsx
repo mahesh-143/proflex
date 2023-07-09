@@ -7,6 +7,7 @@ import { Button } from "../ui/button"
 import { CreateAccount } from "../authentication/register-user"
 import { Login } from "../authentication/login"
 import { useSession } from "next-auth/react"
+import Link from "next/link"
 
 const Header = () => {
   const session = useSession()
@@ -25,6 +26,9 @@ const Header = () => {
         <div className="flex h-16 items-center px-4">
           <Logo />
           <MainNav className="mx-6" />
+          <Link href={"/create-project"}>
+            <Button variant="outline">Upload Project</Button>
+          </Link>
           <div className="ml-auto flex items-center space-x-4">
             <Search />
             {!session.data?.user ? (

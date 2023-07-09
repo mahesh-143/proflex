@@ -11,12 +11,23 @@ export async function createUser(data: {
 }
 
 export async function updateUser(data: {
-  name?: string,
-  email?: string,
-  bio?: string,
-  github? : string,
-  linkedin?: string,
-  role?: string,
+  name?: string
+  email?: string
+  bio?: string
+  github?: string
+  linkedin?: string
+  role?: string
 }) {
   return axiosClient.put("api/edit-user", data)
+}
+
+export async function createProject(data: {
+  title?: string
+  description?: string
+  category?: string
+  githubLink?: string
+  liveLink?: string
+  developerId? : string,
+}) {
+  return axiosClient.post("api/create-project", data)
 }

@@ -54,8 +54,8 @@ model Project {
   liveLink    String?
   thumbnail   String?
   category    Category
-  developer   User?    @relation(fields: [developerId], references: [id])
-  developerId String?  @db.ObjectId
+  developer   User     @relation(fields: [developerId], references: [id])
+  developerId String   @db.ObjectId
 }
 
 enum Category {

@@ -1,20 +1,31 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import Image from "next/image"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
 import { categoryFilters } from "@/constant"
+import { ProjectCard } from "@/components/project-card"
+import client from "./libs/prismadb"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { Button } from "@/components/ui/button"
 
-export default function Home() {
+export default async function Home() {
+  const projects = await client.project.findMany({
+    include: {
+      developer: {
+        select: {
+          name: true,
+        },
+      },
+    },
+  })
   return (
     <div className="mx-4 mt-8">
-      <Tabs defaultValue="all" className="space-y-8 grid place-items-center">
-        <TabsList>
+      <Tabs defaultValue="all" className="sm:space-y-8 sm:grid sm:place-items-center">
+        <TabsList className="hidden sm:block">
           <TabsTrigger value="all">All</TabsTrigger>
           {categoryFilters.map((category) => {
             return (
@@ -24,28 +35,35 @@ export default function Home() {
             )
           })}
         </TabsList>
-        <TabsContent value="all" className="space-y-8">
+        <div className="sm:hidden w-fit mx-auto">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant={"secondary"}>
+            Filter
+            </Button>
+            </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <TabsList className="flex-col h-auto">
+           {categoryFilters.map((category) => {
+            return (
+              <DropdownMenuItem>
+              <TabsTrigger key={category} value={category}>
+                {category}
+              </TabsTrigger>
+              </DropdownMenuItem>
+            )
+          })}
+          </TabsList>
+          </DropdownMenuContent>
+        </DropdownMenu>
+        </div>
+
+        <TabsContent value="all" className="sm:first-letter:space-y-8">
           <div className="flex flex-wrap gap-4 justify-center mb-8">
-            <Card>
-              <CardHeader>
-                <CardTitle>Card Title</CardTitle>
-                <CardDescription>
-                  Lorem ipsum dolor sit amet . Officia nisi error maiores. fmsa
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Image
-                  src={"/demoimage.jpg"}
-                  alt="project thumbnail"
-                  width={300}
-                  height={200}
-                  className="w-full"
-                />
-              </CardContent>
-              <CardFooter>
-                <p>by author</p>
-              </CardFooter>
-            </Card>
+            {projects &&
+              projects.map((project) => {
+                return <ProjectCard {...project} />
+              })}
           </div>
         </TabsContent>
       </Tabs>
