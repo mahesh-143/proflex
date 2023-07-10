@@ -15,54 +15,57 @@ import { signOut } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 interface Props {
-  email: string
-  name: string
-  image: string
+  email?: string | null
+  name?: string | null
+  image?: string | null
 }
-export function UserNav({ email, name, image } : Props) {
+export function UserNav({ email, name, image }: Props) {
   const router = useRouter()
-  return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-          <Avatar className="h-8 w-8">
-            <AvatarImage src={image} alt="@shadcn" />
-            <AvatarFallback>{name.charAt(0)}</AvatarFallback>
-          </Avatar>
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56" align="end" forceMount>
-        <DropdownMenuLabel className="font-normal">
-          <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">{name}</p>
-            <p className="text-xs leading-none text-muted-foreground">
-              {email}
-            </p>
-          </div>
-        </DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuGroup>
+    return (
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+            <Avatar className="h-8 w-8">
+              <AvatarImage src={image || ""} alt="@shadcn" />
+              <AvatarFallback>{name?.charAt(0)}</AvatarFallback>
+            </Avatar>
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="w-56" align="end" forceMount>
+          <DropdownMenuLabel className="font-normal">
+            <div className="flex flex-col space-y-1">
+              <p className="text-sm font-medium leading-none">{name}</p>
+              <p className="text-xs leading-none text-muted-foreground">
+                {email}
+              </p>
+            </div>
+          </DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          <DropdownMenuGroup>
+            <DropdownMenuItem
+              onClick={() => router.push("/myprofile")}
+              className="cursor-pointer"
+            >
+              <User className="mr-2 h-4 w-4" />
+              <span>Profile</span>
+              <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => router.push("/edit-profile")}>
+              <Settings className="mr-2 h-4 w-4" />
+              <span>Edit Profile</span>
+              <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
+            </DropdownMenuItem>
+          </DropdownMenuGroup>
+          <DropdownMenuSeparator />
           <DropdownMenuItem
-            onClick={() => router.push("/myprofile")}
-            className="cursor-pointer"
+            onClick={() => signOut()}
+            className=" cursor-pointer"
           >
-            <User className="mr-2 h-4 w-4" />
-            <span>Profile</span>
-            <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+            <LogOut className="mr-2 h-4 w-4" />
+            <span>Log out</span>
+            <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => router.push("/edit-profile")}>
-            <Settings className="mr-2 h-4 w-4" />
-            <span>Edit Profile</span>
-            <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => signOut()} className=" cursor-pointer">
-          <LogOut className="mr-2 h-4 w-4" />
-          <span>Log out</span>
-          <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
-  )
+        </DropdownMenuContent>
+      </DropdownMenu>
+    )
 }

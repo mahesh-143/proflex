@@ -6,11 +6,19 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { Button } from "@/components/ui/button"
+import Hero from "@/components/sections/hero"
 
 export default async function Home() {
   const projects = await client.project.findMany({
@@ -23,9 +31,13 @@ export default async function Home() {
     },
   })
   return (
-    <div className="mx-4 mt-8">
-      <Tabs defaultValue="all" className="sm:space-y-8 sm:grid sm:place-items-center">
-        <TabsList className="hidden sm:block">
+    <div className="mx-4">
+      <Hero />
+      <Tabs
+        defaultValue="all"
+        className="sm:space-y-8 flex flex-col items-center"
+      >
+        <TabsList className="hidden sm:inline-flex">
           <TabsTrigger value="all">All</TabsTrigger>
           {categoryFilters.map((category) => {
             return (
@@ -35,34 +47,38 @@ export default async function Home() {
             )
           })}
         </TabsList>
-        <div className="sm:hidden w-fit mx-auto">
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant={"secondary"}>
-            Filter
-            </Button>
-            </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <TabsList className="flex-col h-auto">
-           {categoryFilters.map((category) => {
-            return (
-              <DropdownMenuItem>
-              <TabsTrigger key={category} value={category}>
-                {category}
-              </TabsTrigger>
-              </DropdownMenuItem>
-            )
-          })}
-          </TabsList>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <div className="sm:hidden my-2 w-fit self-start">
+          <Select>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Select Category" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Categories</SelectLabel>
+                <TabsList className="flex-col h-auto">
+                  <SelectItem value="all">
+                    <TabsTrigger value="all">All</TabsTrigger>
+                  </SelectItem>
+                  {categoryFilters.map((category) => {
+                    return (
+                      <SelectItem value="category">
+                        <TabsTrigger key={category} value={category}>
+                          {category}
+                        </TabsTrigger>
+                      </SelectItem>
+                    )
+                  })}
+                </TabsList>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
         </div>
 
-        <TabsContent value="all" className="sm:first-letter:space-y-8">
+        <TabsContent value="all" className="sm:space-y-8">
           <div className="flex flex-wrap gap-4 justify-center mb-8">
             {projects &&
               projects.map((project) => {
-                return <ProjectCard {...project} />
+                return <ProjectCard key={project.id} {...project} />
               })}
           </div>
         </TabsContent>

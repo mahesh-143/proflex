@@ -72,7 +72,7 @@ export function Login() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="ghost">Login</Button>
+        <Button variant="outline">Login</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader className="space-y-1">
