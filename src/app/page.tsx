@@ -61,7 +61,7 @@ export default async function Home() {
                   </SelectItem>
                   {categoryFilters.map((category) => {
                     return (
-                      <SelectItem value="category">
+                      <SelectItem key={category} value="category">
                         <TabsTrigger key={category} value={category}>
                           {category}
                         </TabsTrigger>
