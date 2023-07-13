@@ -3,12 +3,6 @@ import { categoryFilters } from "@/constant"
 import { ProjectCard } from "@/components/project-card"
 import client from "./libs/prismadb"
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import {
   Select,
   SelectContent,
   SelectGroup,
@@ -17,7 +11,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { Button } from "@/components/ui/button"
 import Hero from "@/components/sections/hero"
 
 export default async function Home() {
@@ -55,20 +48,10 @@ export default async function Home() {
             <SelectContent>
               <SelectGroup>
                 <SelectLabel>Categories</SelectLabel>
-                <TabsList className="flex-col h-auto">
-                  <SelectItem value="all">
-                    <TabsTrigger value="all">All</TabsTrigger>
-                  </SelectItem>
-                  {categoryFilters.map((category) => {
-                    return (
-                      <SelectItem key={category} value="category">
-                        <TabsTrigger key={category} value={category}>
-                          {category}
-                        </TabsTrigger>
-                      </SelectItem>
-                    )
-                  })}
-                </TabsList>
+                <SelectItem value="all">All</SelectItem>
+                {categoryFilters.map((category) => {
+                  return <SelectItem value="category">{category}</SelectItem>
+                })}
               </SelectGroup>
             </SelectContent>
           </Select>
