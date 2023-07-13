@@ -50,7 +50,7 @@ export default async function Home() {
                 <SelectLabel>Categories</SelectLabel>
                 <SelectItem value="all">All</SelectItem>
                 {categoryFilters.map((category) => {
-                  return <SelectItem value="category">{category}</SelectItem>
+                  return <SelectItem value="category" key={category}>{category}</SelectItem>
                 })}
               </SelectGroup>
             </SelectContent>
