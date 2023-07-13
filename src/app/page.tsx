@@ -30,7 +30,7 @@ export default async function Home() {
         defaultValue="all"
         className="sm:space-y-8 flex flex-col items-center"
       >
-        <TabsList className="hidden sm:inline-flex">
+        <TabsList className="inline-flex overflow-x-scroll sm:overflow-auto w-full sm:w-fit bg-transparent sm:bg-muted  pl-40 sm:pl-1">
           <TabsTrigger value="all">All</TabsTrigger>
           {categoryFilters.map((category) => {
             return (
@@ -40,23 +40,6 @@ export default async function Home() {
             )
           })}
         </TabsList>
-        <div className="sm:hidden my-2 w-fit self-start">
-          <Select>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Select Category" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectLabel>Categories</SelectLabel>
-                <SelectItem value="all">All</SelectItem>
-                {categoryFilters.map((category) => {
-                  return <SelectItem value="category" key={category}>{category}</SelectItem>
-                })}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        </div>
-
         <TabsContent value="all" className="sm:space-y-8">
           <div className="flex flex-wrap gap-4 justify-center mb-8">
             {projects &&
