@@ -2,13 +2,15 @@ import React from "react"
 import client from "@/app/libs/prismadb"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Icons } from "@/components/icons"
-import { LinkedinIcon } from "lucide-react"
 import Image from "next/image"
 import { AspectRatio } from "@/components/ui/aspect-ratio"
 import { Badge } from "@/components/ui/badge"
+import { getServerSession } from "next-auth"
+import { authOptions } from "@/lib/session"
 
 export default async function User(params: { params: { id: string } }) {
+  const session = await getServerSession(authOptions)
+
   if (!(params.params.id.length === 24)) {
     return <h1>project not found</h1>
   }
@@ -27,6 +29,19 @@ export default async function User(params: { params: { id: string } }) {
   if (project) {
     return (
       <div className="max-w-lg mx-auto flex flex-col gap-4 p-4">
+        {
+          //@ts-ignore
+          session?.user.id == project.developerId && (
+            <div className="flex justify-between">
+              <Link href={"/edit-project/"+project.id}>
+                <Button variant={"outline"}>Edit Project</Button>
+              </Link>
+              <Link href={"#"}>
+                <Button variant={"destructive"}>Delete Project</Button>
+              </Link>
+            </div>
+          )
+        }
         <AspectRatio ratio={16 / 9}>
           <Image
             src="/demoimage.jpg"
@@ -37,11 +52,17 @@ export default async function User(params: { params: { id: string } }) {
         </AspectRatio>
         <div className="flex gap-2 items-start">
           <h1 className="font-bold text-4xl">{project.title}</h1>
-          <Badge variant={"secondary"}>
-            {project.category}
-          </Badge>
+          <Badge variant={"secondary"}>{project.category}</Badge>
         </div>
-        <p className="text-sm">by <Link href={project.developerId || "#"} className="underline text-muted-foreground">{project.developer?.name}</Link></p>
+        <p className="text-sm">
+          by{" "}
+          <Link
+            href={"/user/" + project.developerId || "#"}
+            className="underline text-muted-foreground"
+          >
+            {project.developer?.name}
+          </Link>
+        </p>
         <p>{project.description}</p>
         <div className="flex gap-4">
           {project.githubLink && (

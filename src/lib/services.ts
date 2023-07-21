@@ -27,7 +27,18 @@ export async function createProject(data: {
   category?: string
   githubLink?: string
   liveLink?: string
-  developerId? : string,
+  developerId?: string
 }) {
   return axiosClient.post("api/create-project", data)
+}
+
+export async function editProject(data: {
+  title?: string
+  description?: string
+  category?: string
+  githubLink?: string
+  liveLink?: string
+  developerId?: string
+}) {
+  return axiosClient.put("api/edit-project", data)
 }
