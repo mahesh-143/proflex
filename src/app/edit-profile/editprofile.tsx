@@ -27,7 +27,6 @@ import { Textarea } from "@/components/ui/textarea"
 import { toast } from "@/components/ui/use-toast"
 import { updateUser } from "@/lib/services"
 import { useRouter } from "next/navigation"
-import { Category } from "@prisma/client"
 
 const profileFormSchema = z.object({
   name: z
