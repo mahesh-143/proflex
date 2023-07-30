@@ -1,46 +1,68 @@
-# Portfolio Website - Next JS and Tailwind CSS
+# Proflex - Dribbble-Inspired Developer Platform
 
-This repository contains the code for my personal portfolio website, which is built using Next.js and styled with Tailwind CSS. The website showcases my projects, skills, and experience, providing visitors with a comprehensive overview of my abilities and accomplishments
+This repository contains the code for a Dribbble-inspired developer platform that allows developers to share their projects. The platform is built using Next.js, Prisma and MongoDB.
+
+## [Live URL](https://proflexbymahesh.vercel.app)
+
+## Features.
+
+- **User Authentication:** Users can sign up, log in, and manage their profiles.
+
+- **Project Submission:** Developers can submit their projects to showcase their work.
+
+- **Project Details:** Each project has its own dedicated page with detailed information and media.
+
+- **Tagging and Categorization:** Projects can be tagged and categorized for easier discovery.
+
+- **Search Functionality:** Search projects and developers to find specific content.
 
 ## Tech Stack
 
 - [Next.js](https://nextjs.org/) - A Javascript framework for building web applications.
 - [Tailwind CSS](https://tailwindcss.com/) - A utility-first CSS framework.
-- [Framer Motion](https://www.framer.com/motion/) - Motion library for React.
+- [NextAuth](https://next-auth.js.org/) - An authentication solution for Next.js applications.
+- [Prisma](https://www.prisma.io/) - An open source next-generation ORM.
+- [MongoDB](https://www.mongodb.com/) - A NoSQL (non-relational) database.
 
 ## Project Setup
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+To run this developer platform locally on your machine, follow these steps:
 
-## Getting Started
+1. **Clone the Repository:** Begin by cloning this GitHub repository to your local machine:
 
-First, run the development server:
+   ```bash
+   git clone https://github.com/mahesh-143/proflex.git
+    ```
+2. **Navigate to Directory:** Move into the project directory:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+    ```bash
+    cd proflex
+    ```
+3. **Install Dependencies:** Install the necessary dependencies using npm or yarn or pnpm:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+    ```bash
+    npm install
+    # or
+    yarn install
+    # or 
+    pnpm install
+    ```
+4. **Set Up MongoDB:**: Ensure you have a MongoDB instance running and create a database for this project
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+5. **Configure Environment Variables:** Create a .env.local file in the root directory and set the necessary environment variables, including database connection details and authentication keys.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+6. **Run Migrations:** Apply the database schema and run migrations using Prisma:
 
-## Learn More
+    ```bash
+    npx prisma db push
+    ```
+7. **Run Development Server:** Start the Next.js development server:
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+    ```bash
+    npm run dev
+    # or 
+    yarn dev
+    # or
+    pnpm dev
+    ```
+Open http://localhost:3000 with your browser to see the result.
