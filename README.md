@@ -1,3 +1,15 @@
+# Portfolio Website - Next JS and Tailwind CSS
+
+This repository contains the code for my personal portfolio website, which is built using Next.js and styled with Tailwind CSS. The website showcases my projects, skills, and experience, providing visitors with a comprehensive overview of my abilities and accomplishments
+
+## Tech Stack
+
+- [Next.js](https://nextjs.org/) - A Javascript framework for building web applications.
+- [Tailwind CSS](https://tailwindcss.com/) - A utility-first CSS framework.
+- [Framer Motion](https://www.framer.com/motion/) - Motion library for React.
+
+## Project Setup
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
