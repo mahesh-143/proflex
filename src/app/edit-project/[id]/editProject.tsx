@@ -23,13 +23,13 @@ import {
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { toast } from "@/components/ui/use-toast"
-import { createProject, editProject, updateUser } from "@/lib/services"
+import { editProject } from "@/lib/services"
 import { useRouter } from "next/navigation"
 import { useSession } from "next-auth/react"
 import { useState } from "react"
 import { Icons } from "@/components/icons"
 
-const ProjectFormSchema = z.object({
+const projectFormSchema = z.object({
   title: z
     .string()
     .min(2, {
@@ -43,17 +43,29 @@ const ProjectFormSchema = z.object({
   githubLink: z.string().optional(),
   liveLink: z.string().optional(),
 })
+type ProjectFormSchema = z.infer<typeof projectFormSchema>
 
-export default async function EditProjectForm() {
+// This can come from your database or API.
+const defaultValues: Partial<ProjectFormSchema> = {
+  title: "Mahesh",
+  category: "Frontend",
+  description: "I own a computer.",
+  githubLink: "https:github.com",
+  liveLink: "https:linkedin.com",
+}
+
+export default function EditProjectForm() {
   const router = useRouter()
   const session = useSession()
   const [isLoading, setIsLoading] = useState(false)
 
-  const form = useForm<z.infer<typeof ProjectFormSchema>>({
-    resolver: zodResolver(ProjectFormSchema),
+  const form = useForm<ProjectFormSchema>({
+    resolver: zodResolver(projectFormSchema),
+    defaultValues,
+    mode: "onChange",
   })
 
-  async function onSubmit(data: z.infer<typeof ProjectFormSchema>) {
+  async function onSubmit(data: ProjectFormSchema) {
     try {
       setIsLoading(true)
       const response = await editProject({ ...data })
