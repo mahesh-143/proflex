@@ -54,9 +54,8 @@ const defaultValues: Partial<ProjectFormSchema> = {
   liveLink: "https:linkedin.com",
 }
 
-export default function EditProjectForm() {
+export default function EditProjectForm({id}: {id: string}){
   const router = useRouter()
-  const session = useSession()
   const [isLoading, setIsLoading] = useState(false)
 
   const form = useForm<ProjectFormSchema>({
@@ -68,7 +67,7 @@ export default function EditProjectForm() {
   async function onSubmit(data: ProjectFormSchema) {
     try {
       setIsLoading(true)
-      const response = await editProject({ ...data })
+      const response = await editProject({ id, ...data })
       toast({
         title: "Project Edited !!!",
       })

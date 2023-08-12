@@ -15,7 +15,8 @@ const getUserProfile = async () => {
   const session = await getServerSession(authOptions)
   if (session) {
     const userProfile = prisma.user.findUnique({
-      where: { email: session.user?.email as string },
+        //@ts-ignore
+      where: { id: session.user?.id as string },
     })
     return userProfile
   }
@@ -36,7 +37,7 @@ export default async function MyProfile() {
                 <ArrowLeft />
               </Button>
               </Link>
-              
+
               <Link href="edit-profile">
                 <Button variant="outline">Edit Profile</Button>
               </Link>
