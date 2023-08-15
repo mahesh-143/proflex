@@ -7,6 +7,7 @@ import { AspectRatio } from "@/components/ui/aspect-ratio"
 import { Badge } from "@/components/ui/badge"
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/lib/session"
+import DeleteBtn from "@/components/delete-btn"
 
 export default async function User(params: { params: { id: string } }) {
   const session = await getServerSession(authOptions)
@@ -19,12 +20,12 @@ export default async function User(params: { params: { id: string } }) {
       id: params.params.id,
     },
     include: {
-      developer : {
-        select : {
-          name : true
-        }
-      }
-    }
+      developer: {
+        select: {
+          name: true,
+        },
+      },
+    },
   })
   if (project) {
     return (
@@ -33,12 +34,10 @@ export default async function User(params: { params: { id: string } }) {
           //@ts-ignore
           session?.user.id == project.developerId && (
             <div className="flex justify-between">
-              <Link href={"/edit-project/"+project.id}>
+              <Link href={"/edit-project/" + project.id}>
                 <Button variant={"outline"}>Edit Project</Button>
               </Link>
-              <Link href={"#"}>
-                <Button variant={"destructive"}>Delete Project</Button>
-              </Link>
+              <DeleteBtn id={params.params.id} />
             </div>
           )
         }
