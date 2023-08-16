@@ -36,11 +36,9 @@ export const Filter = ({ children }: { children: React.ReactNode }) => {
           )
         })}
       </TabsList>
-      {category && (
-        <TabsContent value={category} className="sm:space-y-8">
-          {children}
-        </TabsContent>
-      )}
+      <TabsContent value={category ? category : "all"} className="sm:space-y-8">
+        {children}
+      </TabsContent>
     </Tabs>
   )
 }
