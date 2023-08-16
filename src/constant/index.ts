@@ -5,4 +5,4 @@ export const NavLinks = [
   { href: "/hiring", key: "Hire Developers", text: "Hire Developers" },
 ]
 
-export const categoryFilters = ["Frontend", "Backend", "Full-Stack", "Mobile"]
+export const categoryFilters = ["Frontend", "Backend", "Fullstack", "Mobile"]
