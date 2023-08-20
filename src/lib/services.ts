@@ -22,6 +22,7 @@ export async function updateUser(data: {
 
 export async function createProject(data: {
   title?: string
+  thumbnail? : string
   description?: string
   category?: string
   githubLink?: string
