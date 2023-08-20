@@ -11,6 +11,7 @@ export async function createUser(data: {
 export async function updateUser(data: {
   name?: string
   email?: string
+  image? : string
   bio?: string
   github?: string
   linkedin?: string

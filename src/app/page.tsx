@@ -5,39 +5,39 @@ import { Filter } from "@/components/categories"
 import { Category } from "@prisma/client"
 
 type SearchParams = {
-  category?: Category
+    category?: Category
 }
 
 type Props = {
-  searchParams: SearchParams
+    searchParams: SearchParams
 }
 
 export default async function Home({ searchParams: { category } }: Props) {
-  const projects = await client.project.findMany({
-    where: {
-      category: {
-        equals: category,
-      },
-    },
-    include: {
-      developer: {
-        select: {
-          name: true,
+    const projects = await client.project.findMany({
+        where: {
+            category: {
+                equals: category,
+            },
         },
-      },
-    },
-  })
-  return (
-    <div className="mx-4">
-      <Hero />
-      <Filter>
-        <div className="flex flex-wrap gap-4 justify-center mb-8">
-          {projects &&
-            projects.map((project) => {
-              return <ProjectCard key={project.id} {...project} />
-            })}
+        include: {
+            developer: {
+                select: {
+                    name: true,
+                },
+            },
+        },
+    })
+    return (
+        <div className="mx-4">
+            <Hero />
+            <Filter>
+                <div className="flex flex-wrap gap-4 justify-center mb-8">
+                    {projects &&
+                        projects.map((project) => {
+                            return <ProjectCard key={project.id} {...project} />
+                        })}
+                </div>
+            </Filter>
         </div>
-      </Filter>
-    </div>
-  )
+    )
 }
