@@ -25,9 +25,10 @@ import { Textarea } from "@/components/ui/textarea"
 import { toast } from "@/components/ui/use-toast"
 import { editProject } from "@/lib/services"
 import { useRouter } from "next/navigation"
-import { useSession } from "next-auth/react"
 import { useState } from "react"
 import { Icons } from "@/components/icons"
+import { UploadButton } from "@/lib/uploadthing"
+import "@uploadthing/react/styles.css";
 
 const projectFormSchema = z.object({
   title: z
@@ -56,6 +57,7 @@ const defaultValues: Partial<ProjectFormSchema> = {
 
 export default function EditProjectForm({id}: {id: string}){
   const router = useRouter()
+  const [thumbnail, setThumbnail] = useState<string | undefined>()
   const [isLoading, setIsLoading] = useState(false)
 
   const form = useForm<ProjectFormSchema>({
@@ -67,7 +69,7 @@ export default function EditProjectForm({id}: {id: string}){
   async function onSubmit(data: ProjectFormSchema) {
     try {
       setIsLoading(true)
-      const response = await editProject({ id, ...data })
+      const response = await editProject({ id, thumbnail, ...data })
       toast({
         title: "Project Edited !!!",
       })
@@ -86,6 +88,26 @@ export default function EditProjectForm({id}: {id: string}){
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <h1>Update thumbnail</h1>
+                <UploadButton
+                    endpoint="imageUploader"
+                    onClientUploadComplete={(res) => {
+                        setThumbnail(res?.at(0)?.url)
+                        toast({
+                            title: "Upload Successfull!!!",
+                        })
+                    }}
+                    onUploadError={(error: Error) => {
+                        // Do something with the error.
+                        toast({
+                            variant: "destructive",
+                            title: "Error:",
+                            description: `${error.message}`,
+                        })
+
+                    }}
+                />
+
         <FormField
           control={form.control}
           name="title"

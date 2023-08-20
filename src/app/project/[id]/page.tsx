@@ -43,7 +43,7 @@ export default async function User(params: { params: { id: string } }) {
         }
         <AspectRatio ratio={16 / 9}>
           <Image
-            src={project.thumbnail || "demoimage.jpg"}
+            src={project.thumbnail || "/demoimage.jpg"}
             alt="project name"
             fill
             className="rounded-md object-cover"
@@ -51,7 +51,7 @@ export default async function User(params: { params: { id: string } }) {
         </AspectRatio>
         <div className="flex gap-2 items-start">
           <h1 className="font-bold text-4xl">{project.title}</h1>
-          <Badge variant={"secondary"}>{project.category}</Badge>
+          <Badge variant={"secondary"}>{project.category}</Badge>project
         </div>
         <p className="text-sm">
           by{" "}

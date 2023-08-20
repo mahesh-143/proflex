@@ -33,6 +33,7 @@ export async function createProject(data: {
 
 export async function editProject(data: {
   id?: string
+  thumbnail? : string
   title?: string
   description?: string
   category?: string

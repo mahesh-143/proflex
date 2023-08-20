@@ -8,6 +8,7 @@ import {
 } from "./ui/card"
 import Image from "next/image"
 import Link from "next/link"
+import { AspectRatio } from "./ui/aspect-ratio"
 
 interface Props {
   id: string | null | undefined
@@ -23,13 +24,13 @@ export const ProjectCard = (props: Props) => {
   return (
     <Card className="w-full md:w-fit pt-6">
       <Link href={`project/${props.id}`}>
-        <CardContent>
+        <CardContent className="w-[415px] h-[250px]">
           <Image
             src={props.thumbnail || "/demoimage.jpg"}
             alt="project thumbnail"
-            width={200}
-            height={100}
-            className="w-full rounded-lg"
+            width={415}
+            height={250}
+            className="w-full h-full object-cover rounded-lg"
           />
         </CardContent>
       </Link>
