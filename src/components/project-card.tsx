@@ -4,7 +4,6 @@ import {
   CardContent,
   CardDescription,
   CardFooter,
-  CardHeader,
   CardTitle,
 } from "./ui/card"
 import Image from "next/image"
@@ -26,7 +25,7 @@ export const ProjectCard = (props: Props) => {
       <Link href={`project/${props.id}`}>
         <CardContent>
           <Image
-            src={"/demoimage.jpg"}
+            src={props.thumbnail || "/demoimage.jpg"}
             alt="project thumbnail"
             width={200}
             height={100}
