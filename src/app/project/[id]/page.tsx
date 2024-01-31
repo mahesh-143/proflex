@@ -43,7 +43,7 @@ export default async function User(params: { params: { id: string } }) {
         }
         <AspectRatio ratio={16 / 9}>
           <Image
-            src={project.thumbnail || "/demoimage.jpg"}
+            src={project.thumbnail || "/demoimage.webp"}
             alt="project name"
             fill
             className="rounded-md object-cover"
