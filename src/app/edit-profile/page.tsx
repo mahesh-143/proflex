@@ -3,6 +3,9 @@ import { Editprofile } from "./editprofile";
 import client from "../libs/prismadb";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/session";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react";
 
 export default async function editprofile() {
   const session = await getServerSession(authOptions);
@@ -23,6 +26,11 @@ export default async function editprofile() {
   });
   return (
     <div className="p-4 max-w-xl mx-auto">
+      <Link href="..">
+        <Button variant="ghost">
+          <ArrowLeft />
+        </Button>
+      </Link>
       <Editprofile userInfo={userInfo} />
     </div>
   );

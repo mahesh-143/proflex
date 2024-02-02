@@ -1,19 +1,20 @@
-import React from "react"
-import client from "@/app/libs/prismadb"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import Image from "next/image"
-import { AspectRatio } from "@/components/ui/aspect-ratio"
-import { Badge } from "@/components/ui/badge"
-import { getServerSession } from "next-auth"
-import { authOptions } from "@/lib/session"
-import DeleteBtn from "@/components/delete-btn"
+import React from "react";
+import client from "@/app/libs/prismadb";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import Image from "next/image";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { Badge } from "@/components/ui/badge";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/session";
+import DeleteBtn from "@/components/delete-btn";
+import { ArrowLeft } from "lucide-react";
 
 export default async function User(params: { params: { id: string } }) {
-  const session = await getServerSession(authOptions)
+  const session = await getServerSession(authOptions);
 
   if (!(params.params.id.length === 24)) {
-    return <h1>project not found</h1>
+    return <h1>project not found</h1>;
   }
   const project = await client.project.findUnique({
     where: {
@@ -26,10 +27,15 @@ export default async function User(params: { params: { id: string } }) {
         },
       },
     },
-  })
+  });
   if (project) {
     return (
       <div className="max-w-lg mx-auto flex flex-col gap-4 p-4">
+        <Link href="..">
+          <Button variant="ghost">
+            <ArrowLeft />
+          </Button>
+        </Link>
         {
           //@ts-ignore
           session?.user.id == project.developerId && (
@@ -76,8 +82,8 @@ export default async function User(params: { params: { id: string } }) {
           )}
         </div>
       </div>
-    )
+    );
   } else {
-    return <h1>project not found</h1>
+    return <h1>project not found</h1>;
   }
 }
