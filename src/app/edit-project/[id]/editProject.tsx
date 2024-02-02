@@ -1,9 +1,9 @@
-"use client"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import * as z from "zod"
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+"use client";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -12,23 +12,25 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
+} from "@/components/ui/form";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { toast } from "@/components/ui/use-toast"
-import { editProject } from "@/lib/services"
-import { useRouter } from "next/navigation"
-import { useState } from "react"
-import { Icons } from "@/components/icons"
-import { UploadButton } from "@/lib/uploadthing"
+} from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { toast } from "@/components/ui/use-toast";
+import { editProject } from "@/lib/services";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { Icons } from "@/components/icons";
+import { UploadButton } from "@/lib/uploadthing";
 import "@uploadthing/react/styles.css";
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 
 const projectFormSchema = z.object({
   title: z
@@ -43,70 +45,86 @@ const projectFormSchema = z.object({
   description: z.string().max(160).min(4),
   githubLink: z.string().optional(),
   liveLink: z.string().optional(),
-})
-type ProjectFormSchema = z.infer<typeof projectFormSchema>
+});
+type ProjectFormSchema = z.infer<typeof projectFormSchema>;
 
-// This can come from your database or API.
-const defaultValues: Partial<ProjectFormSchema> = {
-  title: "Mahesh",
-  category: "Frontend",
-  description: "I own a computer.",
-  githubLink: "https:github.com",
-  liveLink: "https:linkedin.com",
-}
+type Props = {
+  id: string;
+  projectInfo: {
+    title: string | null;
+    category: string | null;
+    liveLink: string | null;
+    githubLink: string | null;
+    description: string | null;
+    thumbnail: string | null;
+  } | null;
+};
 
-export default function EditProjectForm({id}: {id: string}){
-  const router = useRouter()
-  const [thumbnail, setThumbnail] = useState<string | undefined>()
-  const [isLoading, setIsLoading] = useState(false)
+export default function EditProjectForm({ id, projectInfo }: Props) {
+  const router = useRouter();
+  const [thumbnail, setThumbnail] = useState<string | undefined>();
+  const [isLoading, setIsLoading] = useState(false);
+
+  // This can come from your database or API.
+  const defaultValues: Partial<ProjectFormSchema> = {
+    title: projectInfo?.title as string,
+    category: projectInfo?.category as string,
+    description: projectInfo?.description as string,
+    githubLink: projectInfo?.githubLink as string,
+    liveLink: projectInfo?.liveLink as string,
+  };
 
   const form = useForm<ProjectFormSchema>({
     resolver: zodResolver(projectFormSchema),
     defaultValues,
     mode: "onChange",
-  })
+  });
 
   async function onSubmit(data: ProjectFormSchema) {
     try {
-      setIsLoading(true)
-      const response = await editProject({ id, thumbnail, ...data })
+      setIsLoading(true);
+      const response = await editProject({ id, thumbnail, ...data });
       toast({
         title: "Project Edited !!!",
-      })
-      setIsLoading(false)
-      router.push("/")
+      });
+      setIsLoading(false);
+      router.push("/");
     } catch (error) {
-      setIsLoading(false)
+      setIsLoading(false);
       toast({
         variant: "destructive",
         title: "Error:",
         description: `${error}`,
-      })
+      });
     }
   }
 
   return (
     <Form {...form}>
+      <Link href="..">
+        <Button variant="ghost">
+          <ArrowLeft />
+        </Button>
+      </Link>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            <h1>Update thumbnail</h1>
-                <UploadButton
-                    endpoint="imageUploader"
-                    onClientUploadComplete={(res) => {
-                        setThumbnail(res?.at(0)?.url)
-                        toast({
-                            title: "Upload Successfull!!!",
-                        })
-                    }}
-                    onUploadError={(error: Error) => {
-                        // Do something with the error.
-                        toast({
-                            variant: "destructive",
-                            title: "Error:",
-                            description: `${error.message}`,
-                        })
-
-                    }}
-                />
+        <h1>Update thumbnail</h1>
+        <UploadButton
+          endpoint="imageUploader"
+          onClientUploadComplete={(res) => {
+            setThumbnail(res?.at(0)?.url);
+            toast({
+              title: "Upload Successfull!!!",
+            });
+          }}
+          onUploadError={(error: Error) => {
+            // Do something with the error.
+            toast({
+              variant: "destructive",
+              title: "Error:",
+              description: `${error.message}`,
+            });
+          }}
+        />
 
         <FormField
           control={form.control}
@@ -198,5 +216,5 @@ export default function EditProjectForm({id}: {id: string}){
         </Button>
       </form>
     </Form>
-  )
+  );
 }
