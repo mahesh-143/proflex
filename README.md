@@ -6,15 +6,15 @@ This repository contains the code for a Dribbble-inspired developer platform tha
 
 ## Features.
 
-- [x]**User Authentication:** Users can sign up, log in, and manage their profiles.
+- [x] **User Authentication:** Users can sign up, log in, and manage their profiles.
 
-- [x]**Project Submission:** Developers can submit their projects to showcase their work.
+- [x] **Project Submission:** Developers can submit their projects to showcase their work.
 
-- [x]**Project Details:** Each project has its own dedicated page with detailed information and media.
+- [x] **Project Details:** Each project has its own dedicated page with detailed information and media.
 
-- [x]**Tagging and Categorization:** Projects can be tagged and categorized for easier discovery.
+- [x] **Tagging and Categorization:** Projects can be tagged and categorized for easier discovery.
 
-- [ ]**Search Functionality:** Search projects and developers to find specific content.
+- [ ] **Search Functionality:** Search projects and developers to find specific content.
 
 ## Tech Stack
 
