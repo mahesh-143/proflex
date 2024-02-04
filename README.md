@@ -22,6 +22,7 @@ This repository contains the code for a Dribbble-inspired developer platform tha
 - [Tailwind CSS](https://tailwindcss.com/) - A utility-first CSS framework.
 - [NextAuth](https://next-auth.js.org/) - An authentication solution for Next.js applications.
 - [Prisma](https://www.prisma.io/) - An open source next-generation ORM.
+- [Uploadthing](https://uploadthing.com/) - An easier way to upload files.
 - [MongoDB](https://www.mongodb.com/) - A NoSQL (non-relational) database.
 
 ## Project Setup
