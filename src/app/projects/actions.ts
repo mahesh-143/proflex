@@ -12,14 +12,14 @@ export async function fetchProjects({
   search?: string | undefined;
   category?: Category;
 }) {
-  try {
-    const { projects } = await getProjects({
-      query: search,
-      page,
-      category,
-    });
-    return projects;
-  } catch (error) {
-    console.error(error);
+  const { projects, error } = await getProjects({
+    query: search,
+    page,
+    category,
+  });
+  if (error) {
+    console.log(error);
+    return [];
   }
+  return projects || [];
 }
