@@ -12,25 +12,21 @@ export const getProjects = async ({
   page?: number;
   limit?: number;
 }) => {
-  try {
-    const projects = await client.project.findMany({
-      skip: (page - 1) * limit,
-      take: limit,
-      where: {
-        category: {
-          equals: category,
+  const projects = await client.project.findMany({
+    skip: (page - 1) * limit,
+    take: limit,
+    where: {
+      category: {
+        equals: category,
+      },
+    },
+    include: {
+      developer: {
+        select: {
+          name: true,
         },
       },
-      include: {
-        developer: {
-          select: {
-            name: true,
-          },
-        },
-      },
-    });
-    return { projects: projects };
-  } catch (error) {
-    return { error };
-  }
+    },
+  });
+  return { projects: projects };
 };

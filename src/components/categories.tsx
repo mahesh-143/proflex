@@ -17,7 +17,7 @@ export const Filter = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <Tabs
-      defaultValue="all"
+      defaultValue={category || "all"}
       className="sm:space-y-8 flex flex-col items-center"
     >
       <TabsList className="inline-flex overflow-x-scroll sm:overflow-auto w-full sm:w-fit bg-transparent sm:bg-muted  pl-40 sm:pl-1">
