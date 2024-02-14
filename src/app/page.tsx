@@ -26,7 +26,11 @@ export default async function Home({ searchParams }: Props) {
     <div className="mx-4">
       <Hero />
       <Filter>
-        <InfiniteScrollProjects search={search} initialProjects={projects} />
+        <InfiniteScrollProjects
+          category={searchParams.category}
+          search={search}
+          initialProjects={projects}
+        />
       </Filter>
     </div>
   );
