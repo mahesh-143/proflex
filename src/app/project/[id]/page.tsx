@@ -57,7 +57,7 @@ export default async function User(params: { params: { id: string } }) {
         </AspectRatio>
         <div className="flex gap-2 items-start">
           <h1 className="font-bold text-4xl">{project.title}</h1>
-          <Badge variant={"secondary"}>{project.category}</Badge>project
+          <Badge variant={"secondary"}>{project.category}</Badge>
         </div>
         <p className="text-sm">
           by{" "}

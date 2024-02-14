@@ -3,6 +3,7 @@ import { ProjectCard } from "@/components/project-card";
 import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { fetchProjects } from "./actions";
+import { Category } from "@prisma/client";
 
 interface project {
   id: string | null | undefined;
@@ -17,9 +18,11 @@ interface project {
 
 export const InfiniteScrollProjects = ({
   search,
+  category,
   initialProjects,
 }: {
   search: string | undefined;
+  category: Category | undefined;
   initialProjects: project[] | undefined;
 }) => {
   const [projects, setProjects] = useState(initialProjects);
@@ -29,7 +32,7 @@ export const InfiniteScrollProjects = ({
 
   async function loadMoreProjects() {
     const next = page + 1;
-    const projects = await fetchProjects({ search, page: next });
+    const projects = await fetchProjects({ search, category, page: next });
     if (projects?.length < 20) setHasNextPage(false);
     if (projects?.length) {
       if (!hasNextPage) return;
@@ -80,7 +83,7 @@ export const InfiniteScrollProjects = ({
           <span className="sr-only">Loading...</span>
         </div>
       ) : (
-        <p className="text-center font-bold px-20">No more projects to load</p>
+        <p className="text-center font-bold py-20">No more projects to load</p>
       )}
     </>
   );
