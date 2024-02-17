@@ -11,27 +11,25 @@ generator client {
 }
 
 model User {
-  id             String      @id @default(auto()) @map("_id") @db.ObjectId
-  email          String      @unique
+  id             String     @id @default(auto()) @map("_id") @db.ObjectId
+  email          String     @unique
   name           String?
   emailVerified  DateTime?
   image          String?
   hashedPassword String?
   bio            String?
-  createdAt      DateTime    @default(now())
-  updatedAt      DateTime    @updatedAt
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
   accounts       Account[]
   UserType       UserType
-  Developer      Developer[]
-  Project        Project[]
-  Employer       Employer[]
+  Developer      Developer?
+  Employer       Employer?
 }
 
 model Employer {
   id              String @id @default(auto()) @map("_id") @db.ObjectId
-  userId          String @db.ObjectId
+  userId          String @unique @db.ObjectId
   user            User   @relation(fields: [userId], references: [id])
-  // Other company-specific fields go here
   comapny_name    String
   company_website String
   jobs            Job[]
@@ -40,8 +38,7 @@ model Employer {
 // Developers
 model Developer {
   id           String    @id @default(auto()) @map("_id") @db.ObjectId
-  // Other developer-specific fields go here
-  userId       String    @db.ObjectId
+  userId       String    @unique @db.ObjectId
   user         User      @relation(fields: [userId], references: [id])
   githubLink   String?
   projects     Project[]
@@ -76,12 +73,10 @@ model Project {
   liveLink    String?
   thumbnail   String?
   category    Category
-  developerId String    @db.ObjectId
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
   Developer   Developer @relation(fields: [developerId], references: [id])
-  User        User?     @relation(fields: [userId], references: [id])
-  userId      String?   @db.ObjectId
+  developerId String    @db.ObjectId
 }
 
 model Job {
