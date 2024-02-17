@@ -1,7 +1,7 @@
-"use client"
-import { Button } from "../ui/button"
-import { Icons } from "../icons"
-import { Input } from "../ui/input"
+"use client";
+import { Button } from "../ui/button";
+import { Icons } from "../icons";
+import { Input } from "../ui/input";
 import {
   Dialog,
   DialogContent,
@@ -9,7 +9,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "../ui/dialog"
+} from "../ui/dialog";
 import {
   Form,
   FormControl,
@@ -18,14 +18,21 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form"
-import { useToast } from "@/components/ui/use-toast"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import * as z from "zod"
-import { createUser } from "@/lib/services"
-import { signIn } from "next-auth/react"
-import { useState } from "react"
+} from "../ui/form";
+import { useToast } from "@/components/ui/use-toast";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { createUser } from "@/lib/services";
+import { signIn } from "next-auth/react";
+import { useState } from "react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 
 const FormSchema = z.object({
   name: z.string().min(2, {
@@ -35,41 +42,41 @@ const FormSchema = z.object({
   password: z.string().min(8, {
     message: "Password must be at least 8 characters.",
   }),
-})
+  UserType: z.string({
+    required_error: "Please select an email to display.",
+  }),
+});
 export function CreateAccount() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
-  })
-  const { toast } = useToast()
-  const [isLoading, setIsLoading] = useState(false)
-  const [isError, setIsError] = useState(false)
-  const [error, setError] = useState("")
+  });
+  const { toast } = useToast();
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [error, setError] = useState("");
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     try {
-      setIsLoading(true)
-      const response = await createUser(data)
-
+      setIsLoading(true);
+      const response = await createUser(data);
       toast({
         title: "Registration Successfull!!!",
-      })
-      signIn("credentials",
-      {
-        "email": data.email,
-        "password": data.password,
-      })
-      setIsLoading(false)
-
+      });
+      signIn("credentials", {
+        email: data.email,
+        password: data.password,
+      });
+      setIsLoading(false);
     } catch (err) {
-      setIsError(true)
-      setError(`${err}`)
-      console.log(err)
+      setIsError(true);
+      setError(`${err}`);
+      console.log(err);
       toast({
         variant: "destructive",
         title: "Error:",
         description: `${err}`,
-      })
-      setIsLoading(false)
+      });
+      setIsLoading(false);
     }
   }
 
@@ -113,6 +120,30 @@ export function CreateAccount() {
                   <FormDescription>
                     This is your public display name.
                   </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="UserType"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>I am </FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a suitable role to display" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="Developer">Developer</SelectItem>
+                      <SelectItem value="Employer">Employer</SelectItem>
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}
@@ -171,5 +202,5 @@ export function CreateAccount() {
         </div>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

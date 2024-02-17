@@ -11,20 +11,42 @@ generator client {
 }
 
 model User {
-  id             String    @id @default(auto()) @map("_id") @db.ObjectId
-  email          String    @unique
+  id             String      @id @default(auto()) @map("_id") @db.ObjectId
+  email          String      @unique
   name           String?
   emailVerified  DateTime?
   image          String?
   hashedPassword String?
   bio            String?
-  githubLink     String?
-  linkedinLink   String?
-  role           Category?
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
-  projects       Project[]
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
   accounts       Account[]
+  UserType       UserType
+  Developer      Developer[]
+  Project        Project[]
+  Employer       Employer[]
+}
+
+model Employer {
+  id              String @id @default(auto()) @map("_id") @db.ObjectId
+  userId          String @db.ObjectId
+  user            User   @relation(fields: [userId], references: [id])
+  // Other company-specific fields go here
+  comapny_name    String
+  company_website String
+  jobs            Job[]
+}
+
+// Developers
+model Developer {
+  id           String    @id @default(auto()) @map("_id") @db.ObjectId
+  // Other developer-specific fields go here
+  userId       String    @db.ObjectId
+  user         User      @relation(fields: [userId], references: [id])
+  githubLink   String?
+  projects     Project[]
+  linkedinLink String?
+  role         Category?
 }
 
 model Account {
@@ -47,28 +69,32 @@ model Account {
 }
 
 model Project {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
   title       String
   description String?
   githubLink  String?
   liveLink    String?
   thumbnail   String?
   category    Category
-  developer   User     @relation(fields: [developerId], references: [id])
-  developerId String   @db.ObjectId
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  developerId String    @db.ObjectId
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  Developer   Developer @relation(fields: [developerId], references: [id])
+  User        User?     @relation(fields: [userId], references: [id])
+  userId      String?   @db.ObjectId
 }
 
 model Job {
-  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  id           String    @id @default(auto()) @map("_id") @db.ObjectId
   title        String
   comapny_name String
   description  String
   category     Category
   location     String
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  Employer     Employer? @relation(fields: [employerId], references: [id])
+  employerId   String?   @db.ObjectId
 }
 
 enum Category {
@@ -76,4 +102,9 @@ enum Category {
   Frontend
   Backend
   Mobile
+}
+
+enum UserType {
+  Developer
+  Employer
 }
