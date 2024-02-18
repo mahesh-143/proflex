@@ -2,7 +2,6 @@ import React from "react";
 import prisma from "../libs/prismadb";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
-import { UserType } from "@prisma/client";
 
 async function developers() {
   const developer = await prisma.user.findMany({

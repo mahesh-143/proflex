@@ -3,7 +3,6 @@ import { Category } from "@prisma/client";
 import { fetchProjects } from "./projects/actions";
 import { Filter } from "@/components/categories";
 import { InfiniteScrollProjects } from "./projects/InfiniteScrollProjects";
-import { PagesRouteModuleOptions } from "next/dist/server/future/route-modules/pages/module.compiled";
 
 type SearchParams = {
   category?: Category;
