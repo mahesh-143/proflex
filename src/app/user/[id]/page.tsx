@@ -27,6 +27,12 @@ export default async function User(params: { params: { id: string } }) {
           linkedinLink: true,
         },
       },
+      Employer: {
+        select: {
+          comapny_name: true,
+          company_website: true,
+        },
+      },
     },
   });
   if (user) {
@@ -71,6 +77,11 @@ export default async function User(params: { params: { id: string } }) {
               )}
             </div>
           )}
+          {
+            user.UserType == "Employer" && (
+
+            )
+          }
         </div>
       </div>
     );

@@ -8,18 +8,20 @@ import {
 } from "./ui/card";
 import Image from "next/image";
 import Link from "next/link";
-import { AspectRatio } from "./ui/aspect-ratio";
 
 interface Props {
   id: string | null | undefined;
   title: string | null | undefined;
   description: string | null | undefined;
   thumbnail: string | null | undefined;
-  developer: {
-    name: string | null;
-  } | null;
   developerId: string | null | undefined;
+  Developer: {
+    user: {
+      name: string | null | undefined;
+    };
+  };
 }
+
 export const ProjectCard = (props: Props) => {
   return (
     <Card className="md:w-fit pt-6">
@@ -40,11 +42,8 @@ export const ProjectCard = (props: Props) => {
         </Link>
         <CardDescription className="text-base">
           by{" "}
-          <Link
-            href={`/user/${props.developerId}`}
-            className="text-black underline"
-          >
-            {props.developer?.name}
+          <Link href={`/user/${props.id}`} className="text-black underline">
+            {props.Developer?.user?.name}
           </Link>
         </CardDescription>
       </CardFooter>

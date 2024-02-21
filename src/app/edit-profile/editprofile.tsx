@@ -3,7 +3,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -39,7 +38,7 @@ const profileFormSchema = z.object({
     .max(30, {
       message: "Username must not be longer than 30 characters.",
     }),
-  role: z.string(),
+  role: z.string().optional(),
   email: z
     .string({
       required_error: "Please select an email to display.",
@@ -48,6 +47,7 @@ const profileFormSchema = z.object({
   bio: z.string().max(160).min(4),
   githubLink: z.string().optional(),
   linkedinLink: z.string().optional(),
+  UserType: z.string().optional(),
 });
 
 type ProfileFormValues = z.infer<typeof profileFormSchema>;
@@ -59,20 +59,23 @@ export function Editprofile(props: {
     email: string | null;
     image: string | null;
     bio: string | null;
-    githubLink: string | null;
-    linkedinLink: string | null;
+    Developer: {
+      githubLink: string | null;
+      linkedinLink: string | null;
+    } | null;
+    UserType: string | null;
   } | null;
 }) {
   const router = useRouter();
   const [image, setImage] = useState<string | undefined>();
 
   const defaultValues: Partial<ProfileFormValues> = {
-    // name: user?.data?.name,
     name: props.userInfo?.name as string,
     email: props.userInfo?.email as string,
     bio: props.userInfo?.bio as string,
-    githubLink: props.userInfo?.githubLink as string,
-    linkedinLink: props.userInfo?.linkedinLink as string,
+    githubLink: props.userInfo?.Developer?.githubLink as string,
+    linkedinLink: props.userInfo?.Developer?.linkedinLink as string,
+    UserType: props.userInfo?.UserType as string,
   };
 
   const form = useForm<ProfileFormValues>({
@@ -144,32 +147,7 @@ export function Editprofile(props: {
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="role"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Select Role</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select a role" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <SelectItem value="Fullstack">Fullstack Developer</SelectItem>
-                  <SelectItem value="Frontend">Frontend Developer</SelectItem>
-                  <SelectItem value="Backend">Backend Developer</SelectItem>
-                  <SelectItem value="Mobile">Mobile Developer</SelectItem>
-                </SelectContent>
-              </Select>
-              <FormDescription>
-                Select what describes you the best.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+
         <FormField
           control={form.control}
           name="email"
@@ -201,31 +179,93 @@ export function Editprofile(props: {
             </FormItem>
           )}
         />
+
+        {props.userInfo?.UserType == "Developer" && (
+          <>
+            <FormField
+              control={form.control}
+              name="role"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Select Role</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a role" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="Fullstack">
+                        Fullstack Developer
+                      </SelectItem>
+                      <SelectItem value="Frontend">
+                        Frontend Developer
+                      </SelectItem>
+                      <SelectItem value="Backend">Backend Developer</SelectItem>
+                      <SelectItem value="Mobile">Mobile Developer</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormDescription>
+                    Select what describes you the best.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="githubLink"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Github</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="https://github.com/<username>"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="linkedinLink"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Linkedin</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="https://linkedin.com/<username>"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </>
+        )}
         <FormField
           control={form.control}
-          name="githubLink"
+          name="UserType"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Github</FormLabel>
-              <FormControl>
-                <Input placeholder="https://github.com/<username>" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="linkedinLink"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Linkedin</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="https://linkedin.com/<username>"
-                  {...field}
-                />
-              </FormControl>
+              <FormLabel>I am </FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a suitable role to display" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="Developer">Developer</SelectItem>
+                  <SelectItem value="Employer">Employer</SelectItem>
+                </SelectContent>
+              </Select>
               <FormMessage />
             </FormItem>
           )}

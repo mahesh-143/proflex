@@ -10,10 +10,12 @@ interface project {
   title: string | null | undefined;
   description: string | null | undefined;
   thumbnail: string | null | undefined;
-  developer: {
-    name: string | null;
-  } | null;
   developerId: string | null | undefined;
+  Developer: {
+    user: {
+      name: string | null | undefined;
+    };
+  };
 }
 
 export const InfiniteScrollProjects = ({

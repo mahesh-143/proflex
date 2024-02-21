@@ -21,9 +21,13 @@ export default async function User(params: { params: { id: string } }) {
       id: params.params.id,
     },
     include: {
-      developer: {
+      Developer: {
         select: {
-          name: true,
+          user: {
+            select: {
+              name: true,
+            },
+          },
         },
       },
     },

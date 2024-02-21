@@ -31,7 +31,16 @@ export async function PUT(request: NextRequest) {
     } else {
       const updatedUser = await client.user.update({
         where: { id },
-        data: { ...body },
+        // data: { ...body },
+        data: {
+          name: body.name,
+          email: body.email,
+          bio: body.bio,
+          UserType: body.UserType,
+          Developer: {
+            role: body.role,
+          },
+        },
       });
       return NextResponse.json(updatedUser, { status: 200 });
     }

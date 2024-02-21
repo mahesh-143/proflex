@@ -22,9 +22,9 @@ export const getProjects = async ({
         },
       },
       include: {
-        developer: {
+        Developer: {
           select: {
-            name: true,
+            user: true,
           },
         },
       },

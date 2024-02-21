@@ -14,14 +14,20 @@ export default async function editprofile() {
       // @ts-ignore
       id: session?.user?.id as string,
     },
+
     select: {
       name: true,
       email: true,
       image: true,
       bio: true,
-      role: true,
-      githubLink: true,
-      linkedinLink: true,
+      UserType: true,
+      Developer: {
+        select: {
+          role: true,
+          githubLink: true,
+          linkedinLink: true,
+        },
+      },
     },
   });
   return (
