@@ -38,7 +38,9 @@ export async function PUT(request: NextRequest) {
           bio: body.bio,
           UserType: body.UserType,
           Developer: {
-            role: body.role,
+            create: {
+              role: body.role,
+            },
           },
         },
       });
