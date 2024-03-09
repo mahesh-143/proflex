@@ -6,9 +6,13 @@ import { authOptions } from "@/lib/session";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
+import { redirect } from "next/navigation";
 
 export default async function editprofile() {
   const session = await getServerSession(authOptions);
+  if (!session?.user) {
+    redirect("/");
+  }
   const userInfo = await client.user.findUnique({
     where: {
       // @ts-ignore

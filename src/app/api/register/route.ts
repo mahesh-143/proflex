@@ -31,10 +31,21 @@ export async function POST(request: NextRequest) {
       email,
       hashedPassword,
       UserType,
-      Developer: {
-        create: {},
-      },
     },
   });
+  if (UserType == "Developer") {
+    const developer = await prisma.developer.create({
+      data: {
+        userId: user.id,
+      },
+    });
+  } else {
+    const employer = await prisma.employer.create({
+      data: {
+        userId: user.id,
+      },
+    });
+  }
+
   return NextResponse.json(user);
 }

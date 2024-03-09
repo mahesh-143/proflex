@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ArrowLeft, LinkedinIcon } from "lucide-react";
 import { Icons } from "@/components/icons";
+import { ProjectCard } from "@/components/project-card";
 
 const getUserProfile = async () => {
   const session = await getServerSession(authOptions);
@@ -25,6 +26,33 @@ const getUserProfile = async () => {
             role: true,
             githubLink: true,
             linkedinLink: true,
+            projects: {
+              select: {
+                id: true,
+                developerId: true,
+                title: true,
+                description: true,
+                thumbnail: true,
+                Developer: {
+                  select: {
+                    user: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+        Employer: {
+          select: {
+            comapny_name: true,
+            company_website: true,
+            jobs: {
+              select: {
+                id: true,
+                title: true,
+                category: true,
+              },
+            },
           },
         },
       },
@@ -64,22 +92,21 @@ export default async function MyProfile() {
             </Avatar>
             <div className="text-center">
               <h1 className="font-bold text-3xl">{user.name}</h1>
-              {user.Developer?.role ? (
-                <p className="text-muted-foreground">
-                  {user.Developer?.role} Developer
-                </p>
-              ) : (
-                <Link
-                  href="edit-profile"
-                  className="underline text-muted-foreground"
-                >
-                  Click here to add role
-                </Link>
-              )}
+              {user?.UserType == "Developer" &&
+                (user.Developer?.role ? (
+                  <p className="text-muted-foreground">
+                    {user.Developer?.role} Developer
+                  </p>
+                ) : (
+                  <Link
+                    href="edit-profile"
+                    className="underline text-muted-foreground"
+                  >
+                    Click here to add role
+                  </Link>
+                ))}
             </div>
-            <p className="max-w-md text-center">
-              {user.bio || "Hey I am new here and didnt add bio yet"}
-            </p>
+            <p className="max-w-md text-center">{user.bio}</p>
 
             {user.UserType == "Developer" && (
               <div className="flex gap-4">
@@ -110,6 +137,14 @@ export default async function MyProfile() {
           </div>
         </>
       )}
+      <div>
+        {user?.UserType == "Developer"
+          ? user?.Developer?.projects &&
+            user.Developer.projects.map((project) => (
+              <ProjectCard key={project.id} {...project} />
+            ))
+          : user?.Employer?.jobs.map((job) => <div>{JSON.stringify(job)}</div>)}
+      </div>
     </div>
   );
 }

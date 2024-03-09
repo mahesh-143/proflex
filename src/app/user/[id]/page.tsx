@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Icons } from "@/components/icons";
 import { LinkedinIcon } from "lucide-react";
+import { ProjectCard } from "@/components/project-card";
 
 export default async function User(params: { params: { id: string } }) {
   if (!(params.params.id.length === 24)) {
@@ -25,12 +26,33 @@ export default async function User(params: { params: { id: string } }) {
           role: true,
           githubLink: true,
           linkedinLink: true,
+          projects: {
+            select: {
+              id: true,
+              developerId: true,
+              title: true,
+              description: true,
+              thumbnail: true,
+              Developer: {
+                select: {
+                  user: true,
+                },
+              },
+            },
+          },
         },
       },
       Employer: {
         select: {
           comapny_name: true,
           company_website: true,
+          jobs: {
+            select: {
+              id: true,
+              title: true,
+              category: true,
+            },
+          },
         },
       },
     },
@@ -50,9 +72,15 @@ export default async function User(params: { params: { id: string } }) {
           </Avatar>
           <div className="text-center">
             <h1 className="font-bold text-3xl">{user.name}</h1>
-            {user.Developer?.role && (
+            {user?.UserType == "Developer" ? (
+              user.Developer?.role && (
+                <p className="text-muted-foreground">
+                  {user.Developer?.role} Developer
+                </p>
+              )
+            ) : (
               <p className="text-muted-foreground">
-                {user.Developer?.role} Developer
+                {user.Employer?.comapny_name}
               </p>
             )}
           </div>
@@ -77,11 +105,16 @@ export default async function User(params: { params: { id: string } }) {
               )}
             </div>
           )}
-          {
-            user.UserType == "Employer" && (
-
-            )
-          }
+        </div>
+        <div>
+          {user?.UserType == "Developer"
+            ? user?.Developer?.projects &&
+              user.Developer.projects.map((project) => (
+                <ProjectCard key={project.id} {...project} />
+              ))
+            : user?.Employer?.jobs.map((job) => (
+                <div>{JSON.stringify(job)}</div>
+              ))}
         </div>
       </div>
     );

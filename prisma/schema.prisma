@@ -27,11 +27,11 @@ model User {
 }
 
 model Employer {
-  id              String @id @default(auto()) @map("_id") @db.ObjectId
-  userId          String @unique @db.ObjectId
-  user            User   @relation(fields: [userId], references: [id])
-  comapny_name    String
-  company_website String
+  id              String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId          String  @unique @db.ObjectId
+  user            User    @relation(fields: [userId], references: [id])
+  comapny_name    String?
+  company_website String?
   jobs            Job[]
 }
 
@@ -75,7 +75,7 @@ model Project {
   category    Category
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
-  Developer   Developer @relation(fields: [developerId], references: [id])
+  Developer   Developer @relation(fields: [developerId], references: [id], onDelete: Cascade)
   developerId String    @db.ObjectId
 }
 
@@ -88,7 +88,7 @@ model Job {
   location     String
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
-  Employer     Employer? @relation(fields: [employerId], references: [id])
+  Employer     Employer? @relation(fields: [employerId], references: [id], onDelete: Cascade)
   employerId   String?   @db.ObjectId
 }
 
