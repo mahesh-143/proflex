@@ -69,7 +69,7 @@ export default async function User(params: { params: { id: string } }) {
             href={"/user/" + project.developerId || "#"}
             className="underline text-muted-foreground"
           >
-            {project.developer?.name}
+            {project.Developer?.user.name}
           </Link>
         </p>
         <p>{project.description}</p>
