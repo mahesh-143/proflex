@@ -143,7 +143,9 @@ export default async function MyProfile() {
             user.Developer.projects.map((project) => (
               <ProjectCard key={project.id} {...project} />
             ))
-          : user?.Employer?.jobs.map((job) => <div>{JSON.stringify(job)}</div>)}
+          : user?.Employer?.jobs.map((job) => (
+              <div key={job.id}>{JSON.stringify(job)}</div>
+            ))}
       </div>
     </div>
   );

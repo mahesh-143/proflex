@@ -113,7 +113,7 @@ export default async function User(params: { params: { id: string } }) {
                 <ProjectCard key={project.id} {...project} />
               ))
             : user?.Employer?.jobs.map((job) => (
-                <div>{JSON.stringify(job)}</div>
+                <div key={job.id}>{JSON.stringify(job)}</div>
               ))}
         </div>
       </div>
