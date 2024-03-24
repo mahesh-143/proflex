@@ -33,7 +33,7 @@ const Page = () => {
             </p>
           </CardHeader>
           <CardContent>
-            <h2 className="font-medium text-4xl">$1/post</h2>
+            <h2 className="font-medium text-4xl">$1 per month</h2>
             <ul className="flex flex-col gap-2 py-4 text-gray-600 list-disc list-inside">
               <li>Average of 1.1k targeted clicks per month</li>
               <li>Easily hire for full-time or freelance placements</li>
