@@ -5,6 +5,10 @@ Proflex is a Dribbble-inspired developer platform that allows developers to shar
 - [Live URL](https://proflexbymahesh.vercel.app/)
 - [Github](https://github.com/mahesh-143/proflex)
 
+## Objective
+
+The primary objective of this project was to explore the latest features of Next.js 13, including AppRouter and RSC (React Server Components), while also integrating NextAuth for authentication and trying ShadcnUI. However, after achieving these initial goals, I decided to **discontinue** the project due to a lack of continued interest and did not proceed with the implementation of the remaining planned features."
+
 ## Features.
 
 - [x] **User Authentication:** Users can sign up, log in, and manage their profiles.
